@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Les Mélanges — Cours &amp; 25 Exercices Interactifs</title>
+  <style>
+    /* ==========================================================================
+       1. VARIABLES CSS & RÉINITIALISATION PROPRE
+       ========================================================================== */
+    :root {
+      --bg-page: #f4f7fb;
+      --bg-surface: #ffffff;
+      --bg-subtle: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-light: #64748b;
+      --border-color: #e2e8f0;
+      --border-strong: #cbd5e1;
+
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --primary-soft: #e0f2fe;
+
+      --emerald: #059669;
+      --emerald-soft: #d1fae5;
+      --emerald-border: #6ee7b7;
+
+      --amber: #d97706;
+      --amber-soft: #fef3c7;
+      --amber-border: #fcd34d;
+
+      --indigo: #4f46e5;
+      --indigo-soft: #e0e7ff;
+      --indigo-border: #a5b4fc;
+
+      --rose: #e11d48;
+      --rose-soft: #ffe4e6;
+      --rose-border: #fda4af;
+
+      --shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 16px 36px rgba(15, 23, 42, 0.10);
+
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+
+      --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    button, select {
+      font-family: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: min(1240px, 94vw);
+      margin: 0 auto;
+      padding: 0 clamp(0.75rem, 2.5vw, 1.5rem);
+    }
+
+    /* ==========================================================================
+       2. HEADER & NAVIGATION STICKY (ZÉRO CHEVAUCHEMENT)
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 68px;
+      padding: 0.6rem 0;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0ea5e9, #2563eb);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25);
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-full);
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
+    .header-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 0.45rem 0.95rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-score-badge .score-pill {
+      background: #fbbf24;
+      color: #0f172a;
+      padding: 0.1rem 0.55rem;
+      border-radius: var(--radius-full);
+      font-weight: 800;
+    }
+
+    /* ==========================================================================
+       3. SECTION HERO / LANDING PAGE (2 COLONNES ÉQUILIBRÉES)
+       ========================================================================== */
+    .hero-section {
+      padding: clamp(1.5rem, 4vw, 3rem) 0 clamp(1.25rem, 3vw, 2.5rem);
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+      border: 1px solid #bae6fd;
+      border-radius: var(--radius-lg);
+      padding: clamp(1.25rem, 3.5vw, 2.5rem);
+      box-shadow: var(--shadow-md);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: clamp(1.25rem, 3vw, 2.5rem);
+      align-items: center;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      margin: 0 0 1rem;
+      font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .hero-desc {
+      margin: 0 0 1.75rem;
+      font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+      color: var(--text-muted);
+      max-width: 54ch;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 44px;
+      padding: 0.75rem clamp(1rem, 2.2vw, 1.4rem);
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: clamp(0.88rem, 1.2vw, 0.96rem);
+      text-decoration: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      color: var(--text-main);
+      border-color: var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-subtle);
+      border-color: var(--primary);
+    }
+
+    /* Vitrine des deux béchers comparatifs (Homogène vs Hétérogène) */
+    .beakers-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: clamp(0.65rem, 1.8vw, 1rem);
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: clamp(0.85rem, 2vw, 1.25rem);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .beaker-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1rem 0.75rem;
+    }
+
+    .beaker-svg-wrap {
+      width: 92px;
+      height: 112px;
+      margin-bottom: 0.65rem;
+    }
+
+    .beaker-name {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .beaker-pill {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.2rem 0.65rem;
+      border-radius: var(--radius-full);
+      line-height: 1.3;
+    }
+
+    .pill-homo {
+      background: var(--emerald-soft);
+      color: #065f46;
+    }
+
+    .pill-hetero {
+      background: var(--amber-soft);
+      color: #92400e;
+    }
+
+    /* ==========================================================================
+       4. EN-TÊTES DE SECTIONS
+       ========================================================================== */
+    .section-block {
+      padding: clamp(1.75rem, 4vw, 2.75rem) 0;
+      scroll-margin-top: 84px;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 2.25rem;
+    }
+
+    .section-kicker {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      margin-bottom: 0.6rem;
+    }
+
+    .kicker-blue {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+    }
+
+    .kicker-indigo {
+      background: var(--indigo-soft);
+      color: var(--indigo);
+    }
+
+    .kicker-amber {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .section-title {
+      margin: 0 0 0.5rem;
+      font-size: clamp(1.55rem, 2.6vw, 2.15rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .section-subtitle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* ==========================================================================
+       5. COURS : 4 RÈGLES EN GRILLE 2x2 SYMÉTRIQUE (HAUTEUR ÉGALE)
+       ========================================================================== */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: clamp(0.95rem, 2.2vw, 1.35rem);
+      align-items: stretch;
+    }
+
+    .rule-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.15rem, 2.5vw, 1.65rem);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-top: 5px solid var(--primary);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .rule-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .rule-card.theme-emerald { border-top-color: var(--emerald); }
+    .rule-card.theme-amber   { border-top-color: var(--amber); }
+    .rule-card.theme-indigo  { border-top-color: var(--indigo); }
+    .rule-card.theme-rose    { border-top-color: var(--rose); }
+
+    .rule-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .rule-category {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-light);
+    }
+
+    .rule-example-badge {
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 0.28rem 0.75rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .rule-text {
+      margin: 0 0 1.25rem;
+      font-size: 1.03rem;
+      color: var(--text-main);
+      line-height: 1.65;
+    }
+
+    .kw-emerald {
+      background: var(--emerald-soft);
+      color: #065f46;
+      font-weight: 800;
+      padding: 0.08rem 0.42rem;
+      border-radius: 6px;
+    }
+
+    .kw-amber {
+      background: var(--amber-soft);
+      color: #92400e;
+      font-weight: 800;
+      padding: 0.08rem 0.42rem;
+      border-radius: 6px;
+    }
+
+    .kw-indigo {
+      background: var(--indigo-soft);
+      color: #3730a3;
+      font-weight: 800;
+      padding: 0.08rem 0.42rem;
+      border-radius: 6px;
+    }
+
+    .kw-rose {
+      background: var(--rose-soft);
+      color: #9f1239;
+      font-weight: 800;
+      padding: 0.08rem 0.42rem;
+      border-radius: 6px;
+    }
+
+    .rule-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .rule-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       6. SCHÉMA RÉCAPITULATIF & TECHNIQUES DE SÉPARATION
+       ========================================================================== */
+    .mindmap-wrapper {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.15rem, 3vw, 2rem);
+      box-shadow: var(--shadow-md);
+    }
+
+    .mindmap-center-banner {
+      text-align: center;
+      margin-bottom: 1.75rem;
+    }
+
+    .mindmap-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      color: #ffffff;
+      font-size: 1.2rem;
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      padding: 0.7rem 1.75rem;
+      border-radius: var(--radius-full);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.25);
+    }
+
+    .mindmap-branches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+      gap: clamp(1rem, 2.5vw, 1.5rem);
+      align-items: stretch;
+    }
+
+    .branch-panel {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .branch-title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .vocab-pills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .vocab-node {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.65rem 0.85rem;
+      text-align: center;
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vocab-node small {
+      display: block;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 0.15rem;
+    }
+
+    .techniques-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      gap: 0.65rem;
+    }
+
+    .tech-node {
+      background: #ffffff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tech-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--indigo-soft);
+      color: var(--indigo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-weight: 800;
+    }
+
+    .tech-info strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      line-height: 1.25;
+    }
+
+    .tech-info span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .lesson-quote {
+      margin-top: 1.5rem;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 5px solid var(--primary);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-size: 0.98rem;
+      color: #1e3a8a;
+    }
+
+    /* ==========================================================================
+       7. SECTION EXERCICES (5 EXERCICES × 5 QUESTIONS = 25 QUESTIONS)
+       ========================================================================== */
+    .quiz-shell {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* Barre supérieure de progression globale */
+    .quiz-topbar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .progress-chip {
+      background: rgba(56, 189, 248, 0.16);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .quiz-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .quiz-topbar-right span.label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .quiz-topbar-right strong.value {
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #fbbf24;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: #e2e8f0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #0284c7, #4f46e5, #059669);
+      transition: width 0.35s ease;
+    }
+
+    /* Barre d'onglets des 5 exercices */
+    .exercise-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.55rem;
+      padding: clamp(0.6rem, 1.5vw, 0.85rem);
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .tab-btn {
+      appearance: none;
+      background: rgba(255, 255, 255, 0.65);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      min-height: 48px;
+      padding: 0.65rem 0.5rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      text-align: center;
+      transition: all 0.2s ease;
+      min-width: 0;
+    }
+
+    .tab-btn:hover {
+      background: #ffffff;
+      border-color: var(--border-strong);
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .tab-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .tab-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.1rem 0.48rem;
+      border-radius: var(--radius-full);
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .tab-badge.done {
+      background: var(--emerald-soft);
+      color: #065f46;
+    }
+
+    .tab-sub {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-light);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    /* En-tête de l'exercice actif */
+    .exercise-subheader {
+      padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1rem, 3vw, 1.75rem);
+      background: var(--bg-subtle);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .exercise-subheader-info {
+      flex: 1 1 260px;
+      min-width: 0;
+    }
+
+    .exercise-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary-dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .exercise-title {
+      margin: 0 0 0.3rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .exercise-desc {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .exercise-score-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .score-card-mini {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 0.5rem 0.95rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .score-card-mini small {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-light);
+    }
+
+    .score-card-mini strong {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .btn-ghost-sm {
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.55rem 0.9rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-ghost-sm:hover {
+      border-color: var(--rose);
+      color: var(--rose);
+      background: #fff1f2;
+    }
+
+    /* Liste des 5 questions de l'exercice */
+    .questions-container {
+      padding: clamp(1rem, 2.8vw, 1.75rem);
+      display: flex;
+      flex-direction: column;
+      gap: 1.35rem;
+    }
+
+    /* Pagination pas-à-pas (Page 1/5 à Page 5/5) à l'intérieur de chaque exercice */
+    .exercise-pagination-bar {
+      padding: 0.85rem clamp(1rem, 3vw, 1.75rem);
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .page-indicator-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .page-counter-badge {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+      padding: 0.32rem 0.85rem;
+      border-radius: var(--radius-full);
+    }
+
+    .exercise-mini-track {
+      width: 120px;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .exercise-mini-fill {
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.25s ease;
+    }
+
+    .question-dots {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+    }
+
+    .q-dot-btn {
+      min-width: 40px;
+      min-height: 40px;
+      border-radius: 12px;
+      border: 2px solid var(--border-strong);
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .q-dot-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .q-dot-btn.dot-correct {
+      background: var(--emerald-soft);
+      border-color: var(--emerald);
+      color: #065f46;
+    }
+
+    .q-dot-btn.dot-wrong {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+      color: #9f1239;
+    }
+
+    .q-dot-btn.dot-active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(2, 132, 199, 0.28);
+    }
+
+    .q-dot-btn.dot-active.dot-correct {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.28);
+    }
+
+    .q-dot-btn.dot-active.dot-wrong {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.28);
+    }
+
+    .question-card {
+      background: #ffffff;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: clamp(1rem, 2.5vw, 1.65rem);
+      transition: border-color 0.25s ease, background-color 0.25s ease;
+      animation: fadeSlidePage 0.22s ease;
+    }
+
+    @keyframes fadeSlidePage {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .question-card.state-correct {
+      border-color: var(--emerald-border);
+      background: #f0fdf4;
+    }
+
+    .question-card.state-wrong {
+      border-color: var(--rose-border);
+      background: #fff1f2;
+    }
+
+    .question-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .question-number-pill {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      padding: 0.28rem 0.75rem;
+      border-radius: var(--radius-full);
+    }
+
+    .question-status-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .question-prompt {
+      margin: 0 0 1.25rem;
+      font-size: clamp(0.98rem, 1.4vw, 1.1rem);
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.55;
+      overflow-wrap: break-word;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .options-grid.two-cols {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 48px;
+      text-align: left;
+      background: var(--bg-subtle);
+      border: 2px solid var(--border-color);
+      border-radius: 14px;
+      padding: 0.85rem 1rem;
+      font-size: clamp(0.92rem, 1.2vw, 1rem);
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      overflow-wrap: break-word;
+      transition: all 0.18s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1.5px solid var(--border-strong);
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-btn.opt-correct {
+      background: var(--emerald-soft);
+      border-color: var(--emerald);
+      color: #065f46;
+      font-weight: 700;
+    }
+
+    .option-btn.opt-correct .option-letter {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: #ffffff;
+    }
+
+    .option-btn.opt-wrong {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+      color: #9f1239;
+      font-weight: 700;
+    }
+
+    .option-btn.opt-wrong .option-letter {
+      background: var(--rose);
+      border-color: var(--rose);
+      color: #ffffff;
+    }
+
+    .option-btn.opt-dimmed {
+      opacity: 0.55;
+    }
+
+    .cloze-sentence {
+      font-size: clamp(0.96rem, 1.3vw, 1.08rem);
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 2.1;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: clamp(0.9rem, 2vw, 1.25rem);
+    }
+
+    .cloze-select {
+      max-width: 100%;
+      min-height: 42px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: 10px;
+      padding: 0.35rem 0.75rem;
+      margin: 0.15rem 0.25rem;
+      cursor: pointer;
+    }
+
+    .cloze-select.sel-correct {
+      background: var(--emerald-soft);
+      border-color: var(--emerald);
+      color: #065f46;
+    }
+
+    .cloze-select.sel-wrong {
+      background: var(--rose-soft);
+      border-color: var(--rose);
+      color: #9f1239;
+    }
+
+    .feedback-box {
+      margin-top: 1.15rem;
+      border-radius: 14px;
+      padding: 0.95rem 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .feedback-box.fb-ok {
+      background: var(--emerald-soft);
+      border: 1px solid var(--emerald-border);
+      color: #065f46;
+    }
+
+    .feedback-box.fb-ko {
+      background: var(--amber-soft);
+      border: 1px solid var(--amber-border);
+      color: #92400e;
+    }
+
+    .feedback-icon {
+      font-size: 1.15rem;
+      line-height: 1.3;
+      flex-shrink: 0;
+    }
+
+    .quiz-footer {
+      padding: 1.1rem clamp(1rem, 3vw, 1.75rem);
+      background: var(--bg-subtle);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .quiz-footer-center {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .btn-nav {
+      min-height: 44px;
+      background: #ffffff;
+      border: 2px solid var(--border-strong);
+      color: var(--text-main);
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 0.6rem 1.05rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      border-color: var(--primary);
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+    }
+
+    .btn-nav.primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-nav.primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      color: #ffffff;
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .summary-section {
+      margin-top: 2rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .summary-title {
+      margin: 0 0 0.4rem;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .summary-subtitle {
+      margin: 0 auto 1.5rem;
+      color: var(--text-muted);
+      max-width: 60ch;
+    }
+
+    .summary-cards-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .summary-mini-card {
+      background: var(--bg-subtle);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 0.9rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .summary-mini-card.perfect {
+      background: var(--emerald-soft);
+      border-color: var(--emerald-border);
+    }
+
+    .summary-mini-card .ex-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .summary-mini-card .ex-score {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--text-main);
+    }
+
+    .summary-actions {
+      display: flex;
+      justify-content: center;
+    }
+
+    .site-footer {
+      margin-top: 3rem;
+      padding: 1.75rem 0;
+      border-top: 1px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    .site-footer .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 900px) {
+      .hero-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        justify-content: space-between;
+      }
+
+      .nav-links {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        border-top: 1px solid var(--border-color);
+        padding-top: 0.5rem;
+      }
+
+      .nav-links a {
+        font-size: 0.84rem;
+        padding: 0.4rem 0.7rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .exercise-pagination-bar {
+        justify-content: center;
+      }
+
+      .quiz-footer {
+        justify-content: center;
+      }
+
+      .quiz-footer-center {
+        order: -1;
+        width: 100%;
+      }
+
+      .quiz-footer .btn-nav {
+        flex: 1 1 44%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .header-inner {
+        justify-content: center;
+      }
+
+      .quiz-footer .btn-nav {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       HEADER STICKY
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3h6"/>
+            <path d="M10 3v6.5L5.5 18A2 2 0 0 0 7.2 21h9.6a2 2 0 0 0 1.7-3L14 9.5V3"/>
+            <path d="M7.5 15h9"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-title">LaboSciences</span>
+          <span class="brand-sub">Leçon : Les mélanges</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#cours">La leçon</a>
+        <a href="#schema">Schéma &amp; Techniques</a>
+        <a href="#exercices">25 Exercices</a>
+      </nav>
+
+      <div class="header-score-badge" aria-live="polite">
+        <span>Score global :</span>
+        <span id="header-score-pill" class="score-pill">0 / 25</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="container">
+
+    <!-- ======================================================================
+         HERO / LANDING PAGE
+         ====================================================================== -->
+    <section class="hero-section">
+      <div class="hero-card">
+        <div>
+          <span class="hero-tag">Sciences &amp; Technologie • Niveau CM1</span>
+          <h1 class="hero-title">Tout comprendre sur <span>les mélanges</span></h1>
+          <p class="hero-desc">
+            Révise ta leçon de CM1 avec ses exemples illustrés (eau + sirop, eau + huile, eau + sel, eau + riz), retiens les 4 techniques pour séparer un mélange et entraîne-toi avec <strong>5 exercices de 5 questions (25 défis)</strong>.
+          </p>
+          <div class="hero-actions">
+            <a href="#exercices" class="btn btn-primary">Commencer les 25 exercices</a>
+            <a href="#cours" class="btn btn-secondary">Relire la leçon</a>
+          </div>
+        </div>
+
+        <!-- Illustration comparative nette des 2 béchers -->
+        <div class="beakers-showcase" aria-label="Comparaison visuelle entre un mélange homogène et un mélange hétérogène">
+          <!-- Bécher 1 : Eau + Sirop -->
+          <div class="beaker-box">
+            <div class="beaker-svg-wrap">
+              <svg viewBox="0 0 100 120" width="92" height="112" role="img" aria-label="Bécher eau et sirop">
+                <!-- Liquide homogène rose-rouge -->
+                <rect x="22" y="42" width="56" height="64" rx="4" fill="#fb7185" opacity="0.85"/>
+                <!-- Parois du bécher -->
+                <path d="M18 18 L22 18 L22 104 Q22 108 26 108 L74 108 Q78 108 78 104 L78 18 L82 18" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Graduations -->
+                <line x1="28" y1="55" x2="38" y2="55" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                <line x1="28" y1="73" x2="42" y2="73" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+                <line x1="28" y1="91" x2="38" y2="91" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="beaker-name">Eau + Sirop</div>
+            <span class="beaker-pill pill-homo">Homogène • Miscibles</span>
+          </div>
+
+          <!-- Bécher 2 : Eau + Huile -->
+          <div class="beaker-box">
+            <div class="beaker-svg-wrap">
+              <svg viewBox="0 0 100 120" width="92" height="112" role="img" aria-label="Bécher eau et huile">
+                <!-- Couche supérieure : Huile -->
+                <rect x="22" y="42" width="56" height="26" fill="#facc15"/>
+                <!-- Couche inférieure : Eau -->
+                <rect x="22" y="68" width="56" height="38" rx="3" fill="#38bdf8"/>
+                <!-- Séparation nette -->
+                <line x1="22" y1="68" x2="78" y2="68" stroke="#0284c7" stroke-width="2"/>
+                <!-- Parois du bécher -->
+                <path d="M18 18 L22 18 L22 104 Q22 108 26 108 L74 108 Q78 108 78 104 L78 18 L82 18" fill="none" stroke="#334155" stroke-width="3.5" stroke-linecap="round"/>
+                <!-- Graduations -->
+                <line x1="28" y1="55" x2="38" y2="55" stroke="#854d0e" stroke-width="2" stroke-linecap="round"/>
+                <line x1="28" y1="84" x2="42" y2="84" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="beaker-name">Eau + Huile</div>
+            <span class="beaker-pill pill-hetero">Hétérogène • Non miscibles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PARTIE 1 : LES 4 RÈGLES EXACTES DE LA LEÇON (GRILLE 2x2 SYMÉTRIQUE)
+         ====================================================================== -->
+    <section id="cours" class="section-block">
+      <div class="section-header">
+        <span class="section-kicker kicker-blue">Partie 1 — La leçon du cahier</span>
+        <h2 class="section-title">Les 4 règles à retenir par cœur</h2>
+        <p class="section-subtitle">Observe ce que l'on voit à l'œil nu lorsque l'on mélange deux liquides ou un solide avec un liquide.</p>
+      </div>
+
+      <div class="rules-grid">
+        <!-- Règle 1 : Eau + Sirop -->
+        <article class="rule-card theme-emerald">
+          <div>
+            <div class="rule-card-top">
+              <span class="rule-category">1. Deux liquides</span>
+              <span class="rule-example-badge">Exemple : eau + sirop</span>
+            </div>
+            <p class="rule-text">
+              Quand on mélange deux liquides (eau + sirop), on dit que le mélange est <span class="kw-emerald">homogène</span> si on ne distingue plus les éléments. On dit qu'ils sont <span class="kw-emerald">miscibles</span>.
+            </p>
+          </div>
+          <div class="rule-tags">
+            <span class="rule-tag">Mélange homogène</span>
+            <span class="rule-tag">Liquides miscibles</span>
+          </div>
+        </article>
+
+        <!-- Règle 2 : Eau + Huile -->
+        <article class="rule-card theme-amber">
+          <div>
+            <div class="rule-card-top">
+              <span class="rule-category">2. Deux liquides</span>
+              <span class="rule-example-badge">Exemple : eau + huile</span>
+            </div>
+            <p class="rule-text">
+              Quand on mélange deux liquides (eau + huile), on dit que le mélange est <span class="kw-amber">hétérogène</span> si on distingue encore les deux éléments. On dit qu'ils sont <span class="kw-amber">non miscibles</span>.
+            </p>
+          </div>
+          <div class="rule-tags">
+            <span class="rule-tag">Mélange hétérogène</span>
+            <span class="rule-tag">Liquides non miscibles</span>
+          </div>
+        </article>
+
+        <!-- Règle 3 : Eau + Sel -->
+        <article class="rule-card theme-indigo">
+          <div>
+            <div class="rule-card-top">
+              <span class="rule-category">3. Un solide et un liquide</span>
+              <span class="rule-example-badge">Exemple : eau + sel</span>
+            </div>
+            <p class="rule-text">
+              Quand on mélange un solide et un liquide (eau + sel), on ne distingue plus le sel dans l'eau, le mélange est <span class="kw-indigo">homogène</span>, on dit que le sel est <span class="kw-indigo">soluble</span> dans l'eau.
+            </p>
+          </div>
+          <div class="rule-tags">
+            <span class="rule-tag">Mélange homogène</span>
+            <span class="rule-tag">Solide soluble</span>
+          </div>
+        </article>
+
+        <!-- Règle 4 : Eau + Riz -->
+        <article class="rule-card theme-rose">
+          <div>
+            <div class="rule-card-top">
+              <span class="rule-category">4. Un liquide et un solide</span>
+              <span class="rule-example-badge">Exemple : eau + riz</span>
+            </div>
+            <p class="rule-text">
+              Quand on mélange un liquide et un solide (eau + riz), on distingue toujours les deux éléments, le mélange est <span class="kw-rose">hétérogène</span>, on dit que le riz <span class="kw-rose">n'est pas soluble</span> dans l'eau.
+            </p>
+          </div>
+          <div class="rule-tags">
+            <span class="rule-tag">Mélange hétérogène</span>
+            <span class="rule-tag">Solide non soluble</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PARTIE 2 : SCHÉMA RÉCAPITULATIF & TECHNIQUES DE SÉPARATION
+         ====================================================================== -->
+    <section id="schema" class="section-block">
+      <div class="section-header">
+        <span class="section-kicker kicker-indigo">Partie 2 — Carte mentale &amp; Séparation</span>
+        <h2 class="section-title">Le schéma récapitulatif du mélange</h2>
+        <p class="section-subtitle">Tous les mots-clés du schéma du cahier organisés clairement par famille.</p>
+      </div>
+
+      <div class="mindmap-wrapper">
+        <div class="mindmap-center-banner">
+          <div class="mindmap-hub">
+            <span>🧪</span>
+            <span>MÉLANGE</span>
+          </div>
+        </div>
+
+        <div class="mindmap-branches">
+          <!-- Branche gauche : Qualifier le mélange -->
+          <div class="branch-panel">
+            <h3 class="branch-title">1. Décrire l'aspect et le comportement</h3>
+            <div class="vocab-pills-grid">
+              <div class="vocab-node" style="border-color: #6ee7b7; color: #065f46;">
+                homogène
+                <small>1 seul aspect visible</small>
+              </div>
+              <div class="vocab-node" style="border-color: #fcd34d; color: #92400e;">
+                hétérogène
+                <small>éléments visibles</small>
+              </div>
+              <div class="vocab-node" style="border-color: #6ee7b7; color: #065f46;">
+                miscibles
+                <small>2 liquides qui se mélangent</small>
+              </div>
+              <div class="vocab-node" style="border-color: #fcd34d; color: #92400e;">
+                non miscibles
+                <small>2 liquides séparés</small>
+              </div>
+              <div class="vocab-node" style="border-color: #a5b4fc; color: #3730a3;">
+                soluble
+                <small>solide qui disparaît</small>
+              </div>
+              <div class="vocab-node" style="border-color: #fda4af; color: #9f1239;">
+                non soluble
+                <small>solide qui reste visible</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Branche droite : Séparer les constituants -->
+          <div class="branch-panel">
+            <h3 class="branch-title">2. Techniques pour séparer les constituants</h3>
+            <div class="techniques-grid">
+              <div class="tech-node">
+                <div class="tech-icon">♨️</div>
+                <div class="tech-info">
+                  <strong>l'évaporation</strong>
+                  <span>Chauffer pour récupérer un solide dissous (ex. : sel)</span>
+                </div>
+              </div>
+              <div class="tech-node">
+                <div class="tech-icon">🕸️</div>
+                <div class="tech-info">
+                  <strong>le tamisage</strong>
+                  <span>Trier des solides de tailles différentes</span>
+                </div>
+              </div>
+              <div class="tech-node">
+                <div class="tech-icon">⏳</div>
+                <div class="tech-info">
+                  <strong>la filtration</strong>
+                  <span>Retenir les solides grâce à un filtre</span>
+                </div>
+              </div>
+              <div class="tech-node">
+                <div class="tech-icon">🧪</div>
+                <div class="tech-info">
+                  <strong>la décantation</strong>
+                  <span>Laisser reposer pour séparer par gravité</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lesson-quote">
+          <strong>Phrase clé de la leçon :</strong> « Pour séparer les constituants d'un mélange, on peut utiliser plusieurs techniques : <strong>l'évaporation</strong>, <strong>le tamisage</strong>, <strong>la filtration</strong> ou <strong>la décantation</strong>. »
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PARTIE 3 : 5 EXERCICES × 5 QUESTIONS = 25 QUESTIONS INTERACTIVES
+         ====================================================================== -->
+    <section id="exercices" class="section-block">
+      <div class="section-header">
+        <span class="section-kicker kicker-amber">Partie 3 — Entraînement CM1</span>
+        <h2 class="section-title">5 exercices × 5 questions (25 défis)</h2>
+        <p class="section-subtitle">Choisis un exercice ci-dessous et avance page par page. Tu sauras tout de suite si tu as juste !</p>
+      </div>
+
+      <div class="quiz-shell">
+        <!-- Barre supérieure de progression -->
+        <div class="quiz-topbar">
+          <div class="quiz-topbar-left">
+            <span id="global-progress-chip" class="progress-chip">Progression : 0 / 25 questions</span>
+            <button type="button" class="btn-ghost-sm" onclick="resetAllExercises()">Tout réinitialiser</button>
+          </div>
+          <div class="quiz-topbar-right">
+            <span class="label">Score total :</span>
+            <strong id="global-score-value" class="value">0 / 25</strong>
+          </div>
+        </div>
+
+        <!-- Barre visuelle de progression -->
+        <div class="progress-track">
+          <div id="global-progress-fill" class="progress-fill"></div>
+        </div>
+
+        <!-- Onglets des 5 exercices -->
+        <div id="exercise-tabs" class="exercise-tabs" role="tablist" aria-label="Liste des 5 exercices"></div>
+
+        <!-- En-tête de l'exercice sélectionné -->
+        <div id="exercise-subheader" class="exercise-subheader"></div>
+
+        <!-- Barre de pagination multi-pages (Page 1/5 à 5/5) -->
+        <div id="exercise-pagination-bar" class="exercise-pagination-bar"></div>
+
+        <!-- Conteneur de la question active (1 question par page) -->
+        <div id="questions-container" class="questions-container"></div>
+
+        <!-- Pied de navigation pas-à-pas -->
+        <div id="quiz-footer" class="quiz-footer"></div>
+      </div>
+
+      <!-- Bilan global récapitulatif des 5 exercices -->
+      <div class="summary-section" aria-live="polite">
+        <h3 class="summary-title">Bilan de ton entraînement</h3>
+        <p id="summary-message" class="summary-subtitle">Réponds aux 25 questions réparties dans les 5 exercices pour valider toute la leçon.</p>
+        <div id="summary-cards-row" class="summary-cards-row"></div>
+        <div class="summary-actions">
+          <button type="button" class="btn btn-secondary" onclick="resetAllExercises()">Tout recommencer à zéro</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <strong>LaboSciences — Les Mélanges</strong>
+      <span>Cours complet et série interactive de 5 exercices × 5 questions.</span>
+    </div>
+  </footer>
+
+  <!-- ========================================================================
+       JAVASCRIPT PUR : DONNÉES & MOTEUR INTERACTIF (25 QUESTIONS NIVEAU CM1)
+       ======================================================================== -->
+  <script>
+    const exerciseSets = [
+      {
+        id: 0,
+        shortTitle: "Exercice 1",
+        subtitle: "Les mots de la leçon",
+        title: "Exercice 1 : Connais-tu bien les mots de la leçon ?",
+        description: "Lis bien chaque question et clique sur la bonne réponse pour vérifier que tu maîtrises le vocabulaire de CM1.",
+        questions: [
+          {
+            type: "choice",
+            prompt: "Quand on mélange deux liquides et qu'on ne voit plus qu'un seul liquide (on ne distingue plus les deux), comment est le mélange ?",
+            options: [
+              "Il est homogène.",
+              "Il est hétérogène.",
+              "Il est non soluble."
+            ],
+            answerIndex: 0,
+            feedbackOk: "Bravo ! Quand on ne voit plus les deux éléments séparés (comme l'eau et le sirop), le mélange est homogène.",
+            feedbackKo: "Attention ! Si on ne distingue plus les éléments dans le verre, le mélange est homogène."
+          },
+          {
+            type: "choice",
+            prompt: "Deux liquides qui se mélangent très bien ensemble, comme l'eau et le sirop, sont dits :",
+            options: [
+              "Non miscibles",
+              "Miscibles",
+              "Non solubles"
+            ],
+            answerIndex: 1,
+            feedbackOk: "Super ! Deux liquides qui se mélangent complètement ensemble sont miscibles.",
+            feedbackKo: "Pas tout à fait : quand deux liquides se mélangent bien (eau + sirop), on dit qu'ils sont « miscibles »."
+          },
+          {
+            type: "choice",
+            prompt: "Quand on met un solide dans un liquide (comme du sel dans l'eau) et qu'il disparaît complètement à nos yeux, on dit que ce solide est :",
+            options: [
+              "Miscible dans l'eau",
+              "Soluble dans l'eau",
+              "Tamisable dans l'eau"
+            ],
+            answerIndex: 1,
+            feedbackOk: "Gagné ! Un solide qui disparaît (se dissout) dans un liquide est soluble dans l'eau.",
+            feedbackKo: "Attention : pour un solide dans un liquide (comme le sel dans l'eau), on dit qu'il est « soluble »."
+          },
+          {
+            type: "choice",
+            prompt: "Comment appelle-t-on un mélange dans lequel on voit encore les différents éléments à l'œil nu ?",
+            options: [
+              "Un mélange homogène",
+              "Un mélange soluble",
+              "Un mélange hétérogène"
+            ],
+            answerIndex: 2,
+            feedbackOk: "Très bien ! Dès qu'on voit encore plusieurs éléments dans le verre, le mélange est hétérogène.",
+            feedbackKo: "Relis la leçon : si on distingue encore les éléments (comme l'eau et l'huile ou l'eau et le riz), le mélange est hétérogène."
+          },
+          {
+            type: "choice",
+            prompt: "D'après ta leçon, quelles sont les 4 techniques pour séparer les éléments d'un mélange ?",
+            options: [
+              "L'évaporation, le tamisage, la filtration et la décantation",
+              "Congeler, chauffer, couper et mélanger",
+              "La miscibilité, la solubilité, l'homogénéité et l'hétérogénéité"
+            ],
+            answerIndex: 0,
+            feedbackOk: "Excellent ! Les 4 techniques de la leçon sont bien l'évaporation, le tamisage, la filtration et la décantation.",
+            feedbackKo: "Les 4 techniques écrites dans ton cahier sont : l'évaporation, le tamisage, la filtration et la décantation."
+          }
+        ]
+      },
+      {
+        id: 1,
+        shortTitle: "Exercice 2",
+        subtitle: "Vrai ou Faux",
+        title: "Exercice 2 : Vrai ou Faux sur les expériences du cahier",
+        description: "Lis chaque phrase tirée de la leçon et clique sur Vrai ou Faux.",
+        questions: [
+          {
+            type: "choice",
+            prompt: "« Quand on mélange de l'eau et du sirop, on ne distingue plus les éléments : le mélange est homogène et ils sont miscibles. »",
+            options: ["Vrai", "Faux"],
+            answerIndex: 0,
+            feedbackOk: "Vrai ! C'est exactement la règle du cahier pour l'eau et le sirop.",
+            feedbackKo: "C'était Vrai ! L'eau et le sirop forment un mélange homogène : ces deux liquides sont miscibles."
+          },
+          {
+            type: "choice",
+            prompt: "« Quand on mélange de l'eau et de l'huile, le mélange est hétérogène et les deux liquides sont miscibles. »",
+            options: ["Vrai", "Faux"],
+            answerIndex: 1,
+            feedbackOk: "Bien joué ! C'est faux parce que l'eau et l'huile sont NON miscibles : on voit encore l'huile flotter au-dessus de l'eau.",
+            feedbackKo: "Faux ! On distingue encore l'eau et l'huile : le mélange est hétérogène et ils sont NON miscibles."
+          },
+          {
+            type: "choice",
+            prompt: "« Quand on mélange de l'eau et du sel, on ne voit plus le sel dans l'eau : le mélange est donc hétérogène. »",
+            options: ["Vrai", "Faux"],
+            answerIndex: 1,
+            feedbackOk: "Bravo ! Comme on ne voit plus le sel dans l'eau, le mélange est HOMOGÈNE (et pas hétérogène).",
+            feedbackKo: "C'était Faux ! Si on ne distingue plus le sel dans l'eau, le mélange est homogène."
+          },
+          {
+            type: "choice",
+            prompt: "« Quand on mélange de l'eau et du riz, on voit toujours les deux éléments : le mélange est hétérogène et le riz n'est pas soluble dans l'eau. »",
+            options: ["Vrai", "Faux"],
+            answerIndex: 0,
+            feedbackOk: "Super ! Les grains de riz restent visibles dans l'eau : le mélange est hétérogène et le riz n'est pas soluble.",
+            feedbackKo: "C'était Vrai ! Le riz ne disparaît pas dans l'eau, on le voit toujours : il n'est pas soluble."
+          },
+          {
+            type: "choice",
+            prompt: "« Pour séparer les constituants d'un mélange, on peut utiliser l'évaporation, le tamisage, la filtration ou la décantation. »",
+            options: ["Vrai", "Faux"],
+            answerIndex: 0,
+            feedbackOk: "Parfait ! C'est exactement la phrase de conclusion de ta leçon.",
+            feedbackKo: "C'était Vrai ! Ce sont bien les 4 techniques de séparation écrites dans la leçon."
+          }
+        ]
+      },
+      {
+        id: 2,
+        shortTitle: "Exercice 3",
+        subtitle: "Phrases à trous",
+        title: "Exercice 3 : Complète les phrases de la leçon",
+        description: "Ouvre chaque menu déroulant et choisis le bon mot pour compléter la phrase.",
+        questions: [
+          {
+            type: "select",
+            before: "Quand on mélange deux liquides (eau + sirop), on dit que le mélange est ",
+            after: " si on ne distingue plus les éléments.",
+            choices: ["homogène", "hétérogène", "non miscible", "non soluble"],
+            answer: "homogène",
+            feedbackOk: "Bravo ! Quand on ne voit plus les deux éléments séparés, le mélange est homogène.",
+            feedbackKo: "Le bon mot était « homogène » car on ne distingue plus les deux liquides."
+          },
+          {
+            type: "select",
+            before: "L'eau et l'huile forment deux couches bien séparées dans le verre : on dit que ces deux liquides sont ",
+            after: ".",
+            choices: ["miscibles", "non miscibles", "solubles", "homogènes"],
+            answer: "non miscibles",
+            feedbackOk: "Exact ! Deux liquides qui ne se mélangent pas sont non miscibles.",
+            feedbackKo: "Il fallait choisir « non miscibles » car l'eau et l'huile restent séparées."
+          },
+          {
+            type: "select",
+            before: "On ne voit plus les grains de sel dans l'eau salée : on dit que le sel est ",
+            after: " dans l'eau.",
+            choices: ["miscible", "soluble", "non soluble", "hétérogène"],
+            answer: "soluble",
+            feedbackOk: "Très bien ! Le sel disparaît dans l'eau, il est donc soluble.",
+            feedbackKo: "Le mot attendu était « soluble » (un solide qui disparaît dans un liquide)."
+          },
+          {
+            type: "select",
+            before: "Les grains de riz restent visibles au fond du verre d'eau : le riz est ",
+            after: " dans l'eau.",
+            choices: ["soluble", "non soluble", "miscible", "homogène"],
+            answer: "non soluble",
+            feedbackOk: "Parfait ! Le riz ne disparaît pas dans l'eau, il est non soluble (il n'est pas soluble).",
+            feedbackKo: "Puisque le riz reste visible, il n'est pas soluble : il est « non soluble »."
+          },
+          {
+            type: "select",
+            before: "Un mélange d'eau et de riz est un mélange ",
+            after: " car on distingue toujours les deux éléments.",
+            choices: ["homogène", "hétérogène", "miscible", "soluble"],
+            answer: "hétérogène",
+            feedbackOk: "Excellent ! On voit toujours l'eau et le riz : le mélange est hétérogène.",
+            feedbackKo: "Le bon mot était « hétérogène » puisqu'on voit toujours les deux éléments."
+          }
+        ]
+      },
+      {
+        id: 3,
+        shortTitle: "Exercice 4",
+        subtitle: "Séparer un mélange",
+        title: "Exercice 4 : Quelle technique choisir pour séparer ?",
+        description: "Lis chaque petite situation et choisis la bonne technique : évaporation, tamisage, filtration ou décantation.",
+        questions: [
+          {
+            type: "choice",
+            prompt: "À la plage, tu as un seau rempli de sable fin mélangé avec des gros coquillages. Quelle technique utilises-tu pour garder les coquillages et laisser passer le sable ?",
+            options: ["L'évaporation", "Le tamisage", "La filtration", "La décantation"],
+            answerIndex: 1,
+            feedbackOk: "Bravo ! Le tamisage (avec une passoire ou un tamis) permet de séparer les gros morceaux des grains fins.",
+            feedbackKo: "C'est le tamisage ! Le tamis laisse passer le sable fin et retient les gros coquillages."
+          },
+          {
+            type: "choice",
+            prompt: "Dans un verre d'eau salée, on ne voit plus le sel. Comment faire partir toute l'eau (en la chauffant ou au soleil) pour récupérer le sel au fond du verre ?",
+            options: ["L'évaporation", "Le tamisage", "La filtration", "La décantation"],
+            answerIndex: 0,
+            feedbackOk: "Super ! Avec l'évaporation, l'eau part dans l'air et le sel reste au fond du verre.",
+            feedbackKo: "La bonne réponse est l'évaporation : l'eau s'évapore et laisse le sel au fond."
+          },
+          {
+            type: "choice",
+            prompt: "Tu verses de l'eau pleine de terre dans un entonnoir avec un filtre à café en papier. La terre reste bloquée dans le filtre et l'eau propre coule dans le verre. Comment s'appelle cette technique ?",
+            options: ["L'évaporation", "Le tamisage", "La filtration", "La décantation"],
+            answerIndex: 2,
+            feedbackOk: "Parfait ! La filtration retient la terre dans le filtre et laisse passer l'eau.",
+            feedbackKo: "Quand on utilise un filtre, cette technique s'appelle la filtration."
+          },
+          {
+            type: "choice",
+            prompt: "Tu laisses un verre d'eau boueuse posé sur la table sans y toucher : au bout d'un moment, la boue tombe toute seule au fond et l'eau reste au-dessus. Quelle est cette technique ?",
+            options: ["L'évaporation", "Le tamisage", "La filtration", "La décantation"],
+            answerIndex: 3,
+            feedbackOk: "Très bien ! Laisser reposer un mélange pour que le plus lourd tombe au fond s'appelle la décantation.",
+            feedbackKo: "Quand on laisse reposer sans bouger pour que la terre tombe au fond, c'est la décantation."
+          },
+          {
+            type: "choice",
+            prompt: "Après avoir secoué de l'eau et de l'huile, tu poses le bocal sur la table : l'huile remonte toute seule au-dessus de l'eau. Quelle technique observes-tu ?",
+            options: ["L'évaporation", "Le tamisage", "La filtration", "La décantation"],
+            answerIndex: 3,
+            feedbackOk: "Bravo ! En laissant reposer le bocal, l'huile et l'eau se séparent par décantation.",
+            feedbackKo: "C'est encore la décantation ! Au repos, l'huile remonte au-dessus de l'eau."
+          }
+        ]
+      },
+      {
+        id: 4,
+        shortTitle: "Exercice 5",
+        subtitle: "En classe de sciences",
+        title: "Exercice 5 : Les expériences de la classe de CM1",
+        description: "Aide les élèves de CM1 à réussir leurs 5 expériences en classe de sciences !",
+        questions: [
+          {
+            type: "choice",
+            prompt: "Pour le goûter, Léa met un morceau de sucre dans son verre d'eau et mélange avec une cuillère. On ne voit plus du tout le sucre. Que peut-elle dire ?",
+            options: [
+              "Le mélange est hétérogène car le sucre est non soluble.",
+              "Le mélange est homogène car le sucre est soluble dans l'eau.",
+              "Le mélange est homogène car l'eau et le sucre sont miscibles."
+            ],
+            answerIndex: 1,
+            feedbackOk: "Bravo ! Comme le sel dans la leçon, le sucre est un solide soluble dans l'eau : le mélange est homogène.",
+            feedbackKo: "Le sucre est un solide qui disparaît dans l'eau : il est soluble et le mélange est homogène."
+          },
+          {
+            type: "choice",
+            prompt: "En cuisine, Tom verse un peu de vinaigre (liquide) dans de l'eau (liquide). Il mélange et obtient un seul liquide transparent. Que peut-il dire ?",
+            options: [
+              "L'eau et le vinaigre sont miscibles : le mélange est homogène.",
+              "L'eau et le vinaigre sont non miscibles : le mélange est hétérogène.",
+              "Le vinaigre est soluble : le mélange est hétérogène."
+            ],
+            answerIndex: 0,
+            feedbackOk: "Parfait ! Ce sont deux liquides dont on ne voit plus la séparation : ils sont miscibles et le mélange est homogène.",
+            feedbackKo: "Comme l'eau et le sirop, l'eau et le vinaigre sont deux liquides qui forment un mélange homogène : ils sont miscibles."
+          },
+          {
+            type: "choice",
+            prompt: "Inès met des petits cailloux dans un verre d'eau. Les cailloux restent au fond du verre. Comment peut-elle les récupérer facilement ?",
+            options: [
+              "Par décantation ou filtration, car le mélange est hétérogène et les cailloux sont non solubles.",
+              "Par évaporation uniquement, car les cailloux sont solubles.",
+              "On ne peut pas les séparer car ils sont miscibles."
+            ],
+            answerIndex: 0,
+            feedbackOk: "Super raisonnement ! Les cailloux sont non solubles (mélange hétérogène) : on peut les récupérer par décantation ou filtration.",
+            feedbackKo: "Les cailloux ne disparaissent pas dans l'eau (non solubles, mélange hétérogène) : on les sépare par décantation ou filtration."
+          },
+          {
+            type: "choice",
+            prompt: "Un élève a mélangé de l'eau, du sel (qu'on ne voit plus) et du sable (qu'on voit au fond). Que doit-il faire en premier pour enlever le sable ?",
+            options: [
+              "Faire évaporer toute l'eau tout de suite.",
+              "Filtrer le mélange (filtration) pour bloquer le sable dans le filtre et garder l'eau salée.",
+              "Ajouter de l'huile dans le verre."
+            ],
+            answerIndex: 1,
+            feedbackOk: "Génial ! La filtration bloque le sable dans le filtre et laisse passer l'eau salée dans le verre.",
+            feedbackKo: "Il faut d'abord utiliser la filtration : le filtre retient le sable et laisse couler l'eau salée."
+          },
+          {
+            type: "choice",
+            prompt: "Pourquoi ne peut-on pas séparer l'eau et le sirop avec un filtre à café (filtration) ?",
+            options: [
+              "Parce que le sirop est un solide trop gros pour le filtre.",
+              "Parce que l'eau et le sirop sont deux liquides miscibles formant un mélange homogène : tout passe à travers le filtre.",
+              "Parce que l'eau et le sirop sont non miscibles."
+            ],
+            answerIndex: 1,
+            feedbackOk: "Bravo, tu as tout compris ! L'eau et le sirop forment un mélange homogène : les deux liquides traversent le filtre ensemble.",
+            feedbackKo: "L'eau et le sirop forment un mélange homogène de deux liquides miscibles : il n'y a rien de solide à bloquer dans le filtre."
+          }
+        ]
+      }
+    ];
+
+    let activeExerciseIndex = 0;
+    let activeQuestionPages = exerciseSets.map(() => 0);
+    let userAnswers = exerciseSets.map(ex => ex.questions.map(() => null));
+
+    function getStats() {
+      let totalAnswered = 0;
+      let totalCorrect = 0;
+
+      const perExercise = exerciseSets.map((ex, exIdx) => {
+        let answered = 0;
+        let correct = 0;
+
+        userAnswers[exIdx].forEach(ans => {
+          if (ans !== null) {
+            answered++;
+            if (ans.isCorrect) correct++;
+          }
+        });
+
+        totalAnswered += answered;
+        totalCorrect += correct;
+
+        return {
+          answered,
+          correct,
+          total: ex.questions.length
+        };
+      });
+
+      return {
+        totalAnswered,
+        totalCorrect,
+        totalQuestions: 25,
+        perExercise
+      };
+    }
+
+    function renderAll() {
+      const stats = getStats();
+
+      // 1. Mise à jour du header et de la barre globale
+      document.getElementById("header-score-pill").textContent = `${stats.totalCorrect} / ${stats.totalQuestions}`;
+      document.getElementById("global-progress-chip").textContent = `Progression : ${stats.totalAnswered} / ${stats.totalQuestions} questions`;
+      document.getElementById("global-score-value").textContent = `${stats.totalCorrect} / ${stats.totalQuestions}`;
+      document.getElementById("global-progress-fill").style.width = `${(stats.totalAnswered / stats.totalQuestions) * 100}%`;
+
+      // 2. Rendu des 5 onglets
+      const tabsEl = document.getElementById("exercise-tabs");
+      tabsEl.innerHTML = exerciseSets.map((ex, idx) => {
+        const isActive = idx === activeExerciseIndex;
+        const exStat = stats.perExercise[idx];
+        const isFinished = exStat.answered === exStat.total;
+        const badgeText = isFinished && exStat.correct === exStat.total ? "✓ 5/5" : `${exStat.correct}/${exStat.total}`;
+
+        return `
+          <button
+            type="button"
+            role="tab"
+            aria-selected="${isActive}"
+            class="tab-btn ${isActive ? "active" : ""}"
+            onclick="switchExercise(${idx})">
+            <div class="tab-top-row">
+              <span class="tab-title">${ex.shortTitle}</span>
+              <span class="tab-badge ${isFinished ? "done" : ""}">${badgeText}</span>
+            </div>
+            <span class="tab-sub">${ex.subtitle}</span>
+          </button>
+        `;
+      }).join("");
+
+      // 3. En-tête de l'exercice courant
+      const currentEx = exerciseSets[activeExerciseIndex];
+      const currentStat = stats.perExercise[activeExerciseIndex];
+      const currentPageIdx = activeQuestionPages[activeExerciseIndex];
+
+      document.getElementById("exercise-subheader").innerHTML = `
+        <div class="exercise-subheader-info">
+          <span class="exercise-tag">${currentEx.subtitle} • 5 pages</span>
+          <h3 class="exercise-title">${currentEx.title}</h3>
+          <p class="exercise-desc">${currentEx.description}</p>
+        </div>
+        <div class="exercise-score-box">
+          <div class="score-card-mini">
+            <small>Score exercice</small>
+            <strong>${currentStat.correct} / 5</strong>
+          </div>
+          <button type="button" class="btn-ghost-sm" onclick="resetCurrentExercise()">Recommencer</button>
+        </div>
+      `;
+
+      // 3 bis. Barre de pagination interne (Page 1/5 à Page 5/5 + pastilles cliquables)
+      const paginationBarEl = document.getElementById("exercise-pagination-bar");
+      const answeredPercent = (currentStat.answered / currentEx.questions.length) * 100;
+
+      paginationBarEl.innerHTML = `
+        <div class="page-indicator-group">
+          <span class="page-counter-badge">Page ${currentPageIdx + 1} / ${currentEx.questions.length}</span>
+          <div class="exercise-mini-track" title="${currentStat.answered} question(s) répondue(s) sur 5">
+            <div class="exercise-mini-fill" style="width: ${answeredPercent}%"></div>
+          </div>
+        </div>
+        <div class="question-dots" role="navigation" aria-label="Pages de l'exercice">
+          ${currentEx.questions.map((_, qIdx) => {
+            const ans = userAnswers[activeExerciseIndex][qIdx];
+            const isActiveDot = qIdx === currentPageIdx;
+            let dotStateClass = "";
+            if (ans !== null) {
+              dotStateClass = ans.isCorrect ? "dot-correct" : "dot-wrong";
+            }
+            return `
+              <button
+                type="button"
+                class="q-dot-btn ${dotStateClass} ${isActiveDot ? "dot-active" : ""}"
+                aria-label="Aller à la page ${qIdx + 1} sur 5"
+                aria-current="${isActiveDot ? "page" : "false"}"
+                onclick="goToQuestionPage(${qIdx})">
+                ${qIdx + 1}
+              </button>
+            `;
+          }).join("")}
+        </div>
+      `;
+
+      // 4. Affichage d'UNE SEULE question pour la page active
+      const questionsEl = document.getElementById("questions-container");
+      const qIdx = currentPageIdx;
+      const q = currentEx.questions[qIdx];
+      const ans = userAnswers[activeExerciseIndex][qIdx];
+      const isAnswered = ans !== null;
+
+      let cardStateClass = "";
+      let statusLabel = "";
+      if (isAnswered) {
+        if (ans.isCorrect) {
+          cardStateClass = "state-correct";
+          statusLabel = `<span class="question-status-label" style="color: #059669;">✓ Validé</span>`;
+        } else {
+          cardStateClass = "state-wrong";
+          statusLabel = `<span class="question-status-label" style="color: #e11d48;">✕ À revoir</span>`;
+        }
+      }
+
+      let bodyHtml = "";
+
+      if (q.type === "choice") {
+        const isTwoCols = q.options.length === 2;
+        bodyHtml = `
+          <p class="question-prompt">${q.prompt}</p>
+          <div class="options-grid ${isTwoCols ? "two-cols" : ""}">
+            ${q.options.map((optText, optIdx) => {
+              const letter = isTwoCols ? (optIdx === 0 ? "V" : "F") : String.fromCharCode(65 + optIdx);
+              let optClass = "";
+              let letterDisplay = letter;
+
+              if (isAnswered) {
+                if (optIdx === q.answerIndex) {
+                  optClass = "opt-correct";
+                  letterDisplay = "✓";
+                } else if (optIdx === ans.value && !ans.isCorrect) {
+                  optClass = "opt-wrong";
+                  letterDisplay = "✕";
+                } else {
+                  optClass = "opt-dimmed";
+                }
+              }
+
+              return `
+                <button
+                  type="button"
+                  class="option-btn ${optClass}"
+                  ${isAnswered ? "disabled" : ""}
+                  onclick="answerChoice(${activeExerciseIndex}, ${qIdx}, ${optIdx})">
+                  <span class="option-letter">${letterDisplay}</span>
+                  <span>${optText}</span>
+                </button>
+              `;
+            }).join("")}
+          </div>
+        `;
+      } else if (q.type === "select") {
+        let selClass = "";
+        if (isAnswered) {
+          selClass = ans.isCorrect ? "sel-correct" : "sel-wrong";
+        }
+
+        bodyHtml = `
+          <div class="cloze-sentence">
+            <span>${q.before}</span>
+            <select
+              aria-label="Choisir le mot manquant pour la page ${qIdx + 1}"
+              class="cloze-select ${selClass}"
+              ${isAnswered ? "disabled" : ""}
+              onchange="answerSelect(${activeExerciseIndex}, ${qIdx}, this.value)">
+              <option value="">-- choisir un mot --</option>
+              ${q.choices.map(choice => `
+                <option value="${choice}" ${isAnswered && ans.value === choice ? "selected" : ""}>${choice}</option>
+              `).join("")}
+            </select>
+            <span>${q.after}</span>
+          </div>
+        `;
+      }
+
+      let feedbackHtml = "";
+      if (isAnswered) {
+        if (ans.isCorrect) {
+          feedbackHtml = `
+            <div class="feedback-box fb-ok">
+              <span class="feedback-icon">✅</span>
+              <div><strong>Bonne réponse !</strong> ${q.feedbackOk}</div>
+            </div>
+          `;
+        } else {
+          feedbackHtml = `
+            <div class="feedback-box fb-ko">
+              <span class="feedback-icon">💡</span>
+              <div><strong>Explication :</strong> ${q.feedbackKo}</div>
+            </div>
+          `;
+        }
+      }
+
+      questionsEl.innerHTML = `
+        <article class="question-card ${cardStateClass}">
+          <div class="question-meta">
+            <span class="question-number-pill">Question ${qIdx + 1} sur 5</span>
+            ${statusLabel}
+          </div>
+          ${bodyHtml}
+          ${feedbackHtml}
+        </article>
+      `;
+
+      // 5. Pied de navigation pas-à-pas (Question précédente / Question suivante / Passer à l'exercice suivant)
+      const isFirstQuestion = currentPageIdx === 0;
+      const isLastQuestion = currentPageIdx === currentEx.questions.length - 1;
+      const isLastExercise = activeExerciseIndex === exerciseSets.length - 1;
+
+      let prevBtnHtml = "";
+      if (!isFirstQuestion) {
+        prevBtnHtml = `
+          <button type="button" class="btn-nav" onclick="goToQuestionPage(${currentPageIdx - 1})">
+            ← Question précédente
+          </button>
+        `;
+      } else if (activeExerciseIndex > 0) {
+        prevBtnHtml = `
+          <button type="button" class="btn-nav" onclick="switchExercise(${activeExerciseIndex - 1})">
+            ← Exercice précédent
+          </button>
+        `;
+      } else {
+        prevBtnHtml = `
+          <button type="button" class="btn-nav" disabled>
+            ← Question précédente
+          </button>
+        `;
+      }
+
+      let nextBtnHtml = "";
+      if (!isLastQuestion) {
+        nextBtnHtml = `
+          <button type="button" class="btn-nav primary" onclick="goToQuestionPage(${currentPageIdx + 1})">
+            Question suivante →
+          </button>
+        `;
+      } else if (!isLastExercise) {
+        nextBtnHtml = `
+          <button type="button" class="btn-nav primary" onclick="switchExercise(${activeExerciseIndex + 1})">
+            Passer à l'exercice suivant →
+          </button>
+        `;
+      } else {
+        nextBtnHtml = `
+          <button type="button" class="btn-nav primary" onclick="scrollToSummary()">
+            Voir le bilan final ✓
+          </button>
+        `;
+      }
+
+      document.getElementById("quiz-footer").innerHTML = `
+        ${prevBtnHtml}
+        <div class="quiz-footer-center">
+          ${currentEx.shortTitle} • Page ${currentPageIdx + 1} / 5 (${currentStat.answered} répondue(s))
+        </div>
+        ${nextBtnHtml}
+      `;
+
+      // 6. Bilan global en bas de page
+      const summaryMsgEl = document.getElementById("summary-message");
+      if (stats.totalAnswered === 0) {
+        summaryMsgEl.textContent = "Réponds aux 25 questions réparties dans les 5 exercices pour valider toute la leçon.";
+      } else if (stats.totalAnswered < stats.totalQuestions) {
+        summaryMsgEl.textContent = `Tu as déjà répondu à ${stats.totalAnswered} question(s) sur 25 (${stats.totalCorrect} bonne(s) réponse(s)). Continue !`;
+      } else {
+        summaryMsgEl.textContent = `Bravo ! Tu as terminé les 25 questions avec un score final de ${stats.totalCorrect} / 25 !`;
+      }
+
+      document.getElementById("summary-cards-row").innerHTML = exerciseSets.map((ex, idx) => {
+        const s = stats.perExercise[idx];
+        const isPerfect = s.answered === s.total && s.correct === s.total;
+        return `
+          <div class="summary-mini-card ${isPerfect ? "perfect" : ""}">
+            <span class="ex-name">${ex.shortTitle}</span>
+            <span class="ex-score">${s.correct} / ${s.total}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function answerChoice(exIdx, qIdx, optionIdx) {
+      if (userAnswers[exIdx][qIdx] !== null) return;
+      const question = exerciseSets[exIdx].questions[qIdx];
+      userAnswers[exIdx][qIdx] = {
+        value: optionIdx,
+        isCorrect: optionIdx === question.answerIndex
+      };
+      renderAll();
+    }
+
+    function answerSelect(exIdx, qIdx, selectedValue) {
+      if (!selectedValue || userAnswers[exIdx][qIdx] !== null) return;
+      const question = exerciseSets[exIdx].questions[qIdx];
+      userAnswers[exIdx][qIdx] = {
+        value: selectedValue,
+        isCorrect: selectedValue === question.answer
+      };
+      renderAll();
+    }
+
+    function goToQuestionPage(pageIdx) {
+      const totalPages = exerciseSets[activeExerciseIndex].questions.length;
+      if (pageIdx < 0 || pageIdx >= totalPages) return;
+      activeQuestionPages[activeExerciseIndex] = pageIdx;
+      renderAll();
+    }
+
+    function switchExercise(newIdx) {
+      if (newIdx < 0 || newIdx >= exerciseSets.length) return;
+      activeExerciseIndex = newIdx;
+      renderAll();
+      document.getElementById("exercices").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function scrollToSummary() {
+      const summaryEl = document.querySelector(".summary-section");
+      if (summaryEl) {
+        summaryEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+
+    function resetCurrentExercise() {
+      userAnswers[activeExerciseIndex] = exerciseSets[activeExerciseIndex].questions.map(() => null);
+      activeQuestionPages[activeExerciseIndex] = 0;
+      renderAll();
+    }
+
+    function resetAllExercises() {
+      userAnswers = exerciseSets.map(ex => ex.questions.map(() => null));
+      activeQuestionPages = exerciseSets.map(() => 0);
+      activeExerciseIndex = 0;
+      renderAll();
+    }
+
+    window.addEventListener("DOMContentLoaded", renderAll);
+  </script>
+</body>
+</html>
